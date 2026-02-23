@@ -171,7 +171,7 @@ def generate_subscriptions(users_df: pd.DataFrame, cfg: GeneratorConfig) -> pd.D
                 if random.random() < 0.15:
                     reactivation_gap = random.randint(30, 180)
                     current_start = end_date + timedelta(days=reactivation_gap)
-                    current_plan = random.choices(plan_names := list(cfg.plans.keys()),
+                    current_plan = random.choices(list(cfg.plans.keys()),
                                                   weights=[0.2, 0.4, 0.3, 0.1], k=1)[0]
                 else:
                     break
