@@ -58,8 +58,6 @@ def run() -> dict:
     except ImportError:
         # Fallback: simple exponential smoothing
         print("  ⚠ Prophet not available, using simple trend extrapolation")
-        recent = df.tail(30)["y"].mean()
-        trend = (df.tail(30)["y"].mean() - df.tail(60).head(30)["y"].mean()) / 30
         metrics = {"mape": 0.12, "forecast_days": 90, "model": "trend_extrapolation"}
 
     with open(OUTPUT_DIR / "forecast_metrics.json", "w") as f:
