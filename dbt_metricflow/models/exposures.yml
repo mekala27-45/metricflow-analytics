@@ -1,0 +1,52 @@
+version: 2
+
+exposures:
+  - name: executive_dashboard
+    type: dashboard
+    maturity: high
+    url: http://localhost:3000
+    description: "Executive growth dashboard showing north star metrics, DAU, MRR"
+    depends_on:
+      - ref('north_star_metrics')
+      - ref('fct_daily_active_users')
+      - ref('fct_mrr')
+    owner:
+      name: "Ajay Mekala"
+      email: "mekalaajayk@gmail.com"
+
+  - name: retention_dashboard
+    type: dashboard
+    maturity: high
+    url: http://localhost:3000/retention
+    description: "Retention intelligence with cohort analysis and survival curves"
+    depends_on:
+      - ref('cohort_retention')
+      - ref('subscription_survival')
+      - ref('int_user_lifecycle')
+    owner:
+      name: "Ajay Mekala"
+      email: "mekalaajayk@gmail.com"
+
+  - name: revenue_dashboard
+    type: dashboard
+    maturity: high
+    url: http://localhost:3000/revenue
+    description: "Revenue deep-dive with MRR waterfall and anomaly detection"
+    depends_on:
+      - ref('fct_mrr')
+      - ref('fct_mrr_waterfall')
+      - ref('anomaly_flags')
+    owner:
+      name: "Ajay Mekala"
+      email: "mekalaajayk@gmail.com"
+
+  - name: churn_prediction
+    type: ml
+    maturity: medium
+    description: "XGBoost churn prediction model reading dbt features"
+    depends_on:
+      - ref('churn_features')
+      - ref('fct_health_scores')
+    owner:
+      name: "Ajay Mekala"
+      email: "mekalaajayk@gmail.com"

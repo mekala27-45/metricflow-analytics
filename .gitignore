@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+*.egg
+
+# Data
+data/
+*.parquet
+*.duckdb
+*.duckdb.wal
+
+# dbt
+dbt_metricflow/target/
+dbt_metricflow/dbt_packages/
+dbt_metricflow/logs/
+
+# Evidence
+evidence_dashboards/.evidence/
+evidence_dashboards/node_modules/
+evidence_dashboards/build/
+
+# ML outputs
+ml_pipeline/outputs/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Environment
+.env
+.env.local

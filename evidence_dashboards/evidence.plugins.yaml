@@ -1,0 +1,4 @@
+datasources:
+  - package: "@evidence-dev/duckdb"
+    options:
+      filename: ../data/metricflow.duckdb

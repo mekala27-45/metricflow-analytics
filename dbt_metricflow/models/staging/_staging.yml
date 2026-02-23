@@ -1,0 +1,101 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Raw Parquet files from data generator"
+    schema: main
+    tables:
+      - name: users
+        description: "Raw user registrations"
+        meta:
+          owner: "analytics_engineering"
+        columns:
+          - name: user_id
+            tests: [unique, not_null]
+          - name: email
+            tests: [unique, not_null]
+          - name: signup_date
+            tests: [not_null]
+
+      - name: events
+        description: "Raw product usage events"
+        columns:
+          - name: event_id
+            tests: [not_null]
+          - name: user_id
+            tests: [not_null]
+
+      - name: subscriptions
+        description: "Subscription lifecycle events"
+        columns:
+          - name: subscription_id
+            tests: [unique, not_null]
+
+      - name: payments
+        description: "Payment transactions"
+        columns:
+          - name: payment_id
+            tests: [unique, not_null]
+
+      - name: sessions
+        description: "User sessions (aggregated from events)"
+        columns:
+          - name: session_id_unique
+            tests: [unique, not_null]
+
+      - name: marketing_touches
+        description: "Marketing attribution touchpoints"
+        columns:
+          - name: touch_id
+            tests: [unique, not_null]
+
+models:
+  - name: stg_users
+    description: "Cleaned and typed user records"
+    columns:
+      - name: user_id
+        description: "Unique user identifier"
+        tests: [unique, not_null]
+      - name: signup_date
+        tests: [not_null]
+      - name: acquisition_channel
+        tests:
+          - accepted_values:
+              values: ['organic_search', 'paid_search', 'social_media', 'referral', 'direct', 'email_campaign', 'partner', 'content_marketing']
+
+  - name: stg_events
+    description: "Cleaned product events with consistent typing"
+    columns:
+      - name: event_id
+        tests: [not_null]
+      - name: user_id
+        tests: [not_null]
+
+  - name: stg_subscriptions
+    description: "Subscription periods with lifecycle tracking"
+    columns:
+      - name: subscription_id
+        tests: [unique, not_null]
+
+  - name: stg_payments
+    description: "Payment transactions"
+    columns:
+      - name: payment_id
+        tests: [unique, not_null]
+      - name: amount
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 5000
+
+  - name: stg_sessions
+    description: "Session-level engagement data"
+    columns:
+      - name: session_id
+        tests: [unique, not_null]
+
+  - name: stg_marketing_touches
+    description: "Marketing attribution touchpoints"
+    columns:
+      - name: touch_id
+        tests: [unique, not_null]

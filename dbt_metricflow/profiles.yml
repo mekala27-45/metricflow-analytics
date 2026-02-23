@@ -1,0 +1,9 @@
+metricflow:
+  outputs:
+    dev:
+      type: duckdb
+      path: '../data/metricflow.duckdb'
+      threads: 4
+      extensions:
+        - parquet
+  target: dev

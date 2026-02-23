@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  # Product
+  - name: fct_daily_active_users
+    description: "Daily active user metrics by engagement type"
+    columns:
+      - name: event_date
+        tests: [not_null]
+
+  - name: fct_feature_adoption
+    description: "Feature adoption tracking by week"
+
+  - name: dim_users
+    description: "Enriched user dimension with engagement scores and revenue"
+    columns:
+      - name: user_id
+        tests: [unique, not_null]
+      - name: engagement_score
+        description: "Composite engagement score 0-100"
+
+  # Revenue
+  - name: fct_mrr
+    description: "Monthly recurring revenue by plan"
+    columns:
+      - name: payment_month
+        tests: [not_null]
+
+  - name: fct_mrr_waterfall
+    description: "MRR waterfall: new + expansion - contraction - churn"
+
+  - name: fct_payments
+    description: "Payment fact table"
+    columns:
+      - name: payment_id
+        tests: [unique, not_null]
+
+  # Growth
+  - name: fct_signups
+    description: "Daily signup metrics by channel and plan"
+
+  - name: fct_activation
+    description: "Activation funnel metrics by cohort"
+
+  # Marketing
+  - name: fct_channel_performance
+    description: "Marketing channel ROI and attribution"
+
+  # Customer Health
+  - name: fct_health_scores
+    description: "Customer health scoring (0-100)"
+    columns:
+      - name: user_id
+        tests: [unique, not_null]
+      - name: health_status
+        tests:
+          - accepted_values:
+              values: ['healthy', 'monitor', 'warning', 'critical']
+
+  # Experimentation
+  - name: fct_experiment_results
+    description: "A/B test simulation results"

@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: cohort_retention
+    description: "Month-over-month cohort retention analysis"
+    columns:
+      - name: cohort_month
+        tests: [not_null]
+
+  - name: funnel_analysis
+    description: "6-step conversion funnel by cohort"
+
+  - name: ltv_features
+    description: "Customer LTV feature table for ML pipeline"
+    columns:
+      - name: user_id
+        tests: [unique, not_null]
+
+  - name: rfm_segmentation
+    description: "RFM (Recency, Frequency, Monetary) customer segmentation"
+    columns:
+      - name: user_id
+        tests: [unique, not_null]
+      - name: rfm_segment
+        tests:
+          - accepted_values:
+              values: ['Champions', 'Loyal Customers', 'New Customers', 'At Risk', 'Lost', 'Potential Loyalists', 'Need Attention']
+
+  - name: churn_features
+    description: "Churn prediction feature table for ML"
+    columns:
+      - name: user_id
+        tests: [unique, not_null]
+
+  - name: north_star_metrics
+    description: "North Star Metric framework with daily KPIs"
+
+  - name: subscription_survival
+    description: "Subscription survival curves by plan"
+
+  - name: anomaly_flags
+    description: "Revenue anomaly detection using z-score method"
+    columns:
+      - name: payment_date
+        tests: [unique, not_null]

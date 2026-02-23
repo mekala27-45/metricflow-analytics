@@ -1,0 +1,55 @@
+name: 'metricflow'
+version: '1.0.0'
+config-version: 2
+profile: 'metricflow'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+seeds:
+  metricflow:
+    +schema: seeds
+
+models:
+  metricflow:
+    staging:
+      +materialized: view
+      +schema: staging
+      +tags: ["staging"]
+    intermediate:
+      +materialized: view
+      +schema: intermediate
+      +tags: ["intermediate"]
+    marts:
+      +materialized: table
+      +schema: marts
+      +tags: ["marts"]
+      product:
+        +tags: ["product_analytics"]
+      revenue:
+        +tags: ["revenue"]
+      growth:
+        +tags: ["growth"]
+      marketing:
+        +tags: ["marketing"]
+      customer_health:
+        +tags: ["customer_health"]
+      experimentation:
+        +tags: ["experimentation"]
+    advanced:
+      +materialized: table
+      +schema: advanced
+      +tags: ["advanced_analytics"]
+
+vars:
+  metricflow_start_date: '2022-01-01'
+  metricflow_end_date: '2025-12-31'
+  churn_lookback_days: 30
+  activation_threshold_events: 5
+  power_user_threshold_events: 50
