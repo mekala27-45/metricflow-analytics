@@ -49,8 +49,9 @@ def run() -> dict:
         con = duckdb.connect(DB_PATH)
         con.execute("CREATE SCHEMA IF NOT EXISTS ml_outputs")
         con.execute("DROP TABLE IF EXISTS ml_outputs.user_forecast")
-        out = forecast[["ds", "yhat", "yhat_lower", "yhat_upper"]].tail(90)
-        con.execute("CREATE TABLE ml_outputs.user_forecast AS SELECT * FROM out")
+        out_df = forecast[["ds", "yhat", "yhat_lower", "yhat_upper"]].tail(90)
+        con.register("temp_forecast_view", out_df)
+        con.execute("CREATE TABLE ml_outputs.user_forecast AS SELECT * FROM temp_forecast_view")
         con.close()
 
         print(f"  ✓ MAPE: {mape:.2%} | 90-day forecast generated")
