@@ -54,8 +54,7 @@ def run() -> dict:
     con = duckdb.connect(DB_PATH)
     con.execute("CREATE SCHEMA IF NOT EXISTS ml_outputs")
     con.execute("DROP TABLE IF EXISTS ml_outputs.revenue_anomalies")
-    results = df[["payment_date", "daily_revenue", "anomaly_score", "is_anomaly"]]
-    con.execute("CREATE TABLE ml_outputs.revenue_anomalies AS SELECT * FROM results")
+    con.execute("CREATE TABLE ml_outputs.revenue_anomalies AS SELECT payment_date, daily_revenue, anomaly_score, is_anomaly FROM df")
     con.close()
 
     print(f"  ✓ {n_anomalies} anomalies detected out of {len(df)} days")
