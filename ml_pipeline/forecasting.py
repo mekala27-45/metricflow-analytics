@@ -12,7 +12,7 @@ OUTPUT_DIR = Path("ml_pipeline/outputs")
 
 def run() -> dict:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    print("📈 User Forecasting Pipeline")
+    print("\U0001f4c8 User Forecasting Pipeline")
 
     con = duckdb.connect(DB_PATH, read_only=True)
     df = con.execute("""
@@ -54,16 +54,17 @@ def run() -> dict:
         con.execute("CREATE TABLE ml_outputs.user_forecast AS SELECT * FROM temp_forecast_view")
         con.close()
 
-        print(f"  ✓ MAPE: {mape:.2%} | 90-day forecast generated")
+        print(f"  \u2713 MAPE: {mape:.2%} | 90-day forecast generated")
 
     except ImportError:
         # Fallback: simple exponential smoothing
-        print("  ⚠ Prophet not available, using simple trend extrapolation")
+        print("  \u26a0 Prophet not available, using simple trend extrapolation")
         metrics = {"mape": 0.12, "forecast_days": 90, "model": "trend_extrapolation"}
 
+    # Always save metrics JSON regardless of which path was taken
     with open(OUTPUT_DIR / "forecast_metrics.json", "w") as f:
         json.dump(metrics, f, indent=2)
-    print("  ✅ Forecast saved")
+    print("  \u2705 Forecast saved")
     return metrics
 
 
