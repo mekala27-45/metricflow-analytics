@@ -1,7 +1,15 @@
 """Configuration for synthetic SaaS data generation."""
-
+import os
 from dataclasses import dataclass, field
 from datetime import date
+
+
+def _default_num_users() -> int:
+    """Read num_users from CI_NUM_USERS env var if set, otherwise use production default."""
+    env_val = os.environ.get("CI_NUM_USERS")
+    if env_val is not None:
+        return int(env_val)
+    return 50_000
 
 
 @dataclass(frozen=True)
@@ -9,7 +17,7 @@ class GeneratorConfig:
     """Parameters controlling data generation."""
 
     # Scale
-    num_users: int = 50_000
+    num_users: int = field(default_factory=_default_num_users)
     history_start: date = date(2022, 1, 1)
     history_end: date = date(2025, 12, 31)
 
@@ -23,8 +31,14 @@ class GeneratorConfig:
 
     # Channels
     acquisition_channels: list = field(default_factory=lambda: [
-        "organic_search", "paid_search", "social_media", "referral",
-        "direct", "email_campaign", "partner", "content_marketing",
+        "organic_search",
+        "paid_search",
+        "social_media",
+        "referral",
+        "direct",
+        "email_campaign",
+        "partner",
+        "content_marketing",
     ])
 
     # Churn parameters
@@ -36,10 +50,20 @@ class GeneratorConfig:
 
     # Events
     event_types: list = field(default_factory=lambda: [
-        "page_view", "feature_click", "report_created", "dashboard_viewed",
-        "api_call", "export_data", "invite_sent", "integration_connected",
-        "search_performed", "settings_changed", "support_ticket_opened",
-        "file_uploaded", "comment_added", "alert_configured",
+        "page_view",
+        "feature_click",
+        "report_created",
+        "dashboard_viewed",
+        "api_call",
+        "export_data",
+        "invite_sent",
+        "integration_connected",
+        "search_performed",
+        "settings_changed",
+        "support_ticket_opened",
+        "file_uploaded",
+        "comment_added",
+        "alert_configured",
     ])
 
     # Output
