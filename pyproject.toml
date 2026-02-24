@@ -1,35 +1,35 @@
 [build-system]
-    requires = ["setuptools>=68.0", "wheel"]
-    build-backend = "setuptools.build_meta"
-    
-    [project]
-    name = "metricflow-analytics"
-    version = "1.0.0"
-    description = "Production-grade analytics engineering platform for SaaS intelligence"
-    readme = "README.md"
-    license = "MIT"
-    requires-python = ">=3.11"
-    authors = [{name = "Ajay Mekala", email = "mekalaajayk@gmail.com"}]
-    
-    dependencies = [
-      "duckdb>=1.1.0",
-      "pandas>=2.1.0",
-      "numpy>=1.26.0",
-      "faker>=28.0.0",
-      "scikit-learn>=1.4.0",
-      "xgboost>=2.0.0",
-      "shap>=0.45.0",
-      "prophet>=1.1.5",
-      "plotly>=5.18.0",
-      "rich>=13.7.0",
-    ]
-    
-    [project.optional-dependencies]
-    dev = [
-      "pytest>=7.4.0",
-      "ruff>=0.5.0",
-    ]
-    
-    [tool.setuptools.packages.find]
-    include = ["ml_pipeline*", "dbt_metricflow*", "data_generator*", "evidence_dashboards*"]
-    
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "metricflow-analytics"
+version = "1.0.0"
+description = "Production-grade analytics engineering platform for SaaS intelligence"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{name = "Ajay Mekala", email = "mekalaajayk@gmail.com"}]
+
+dependencies = [
+    "duckdb>=1.1.0",
+    "pandas>=2.1.0",
+    "numpy>=1.26.0",
+    "faker>=28.0.0",
+    "pyarrow>=14.0.0",
+    "scikit-learn>=1.4.0",
+    "xgboost>=2.0.0",
+    "shap>=0.45.0",
+    "prophet>=1.1.5",
+    "plotly>=5.18.0",
+    "rich>=13.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "ruff>=0.5.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["ml_pipeline*", "dbt_metricflow*", "data_generator*", "evidence_dashboards*"]
