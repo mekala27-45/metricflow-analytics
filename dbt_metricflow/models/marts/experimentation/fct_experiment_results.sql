@@ -8,7 +8,8 @@ events as (
 )
 select
     -- Simulate experiment: odd user_ids = variant, even = control
-    case when abs(hashtext(u.user_id)) % 2 = 0 then 'control' else 'variant' end as experiment_group,
+    -- Using hash() (DuckDB native) instead of hashtext() (PostgreSQL only)
+    case when abs(hash(u.user_id)::bigint) % 2 = 0 then 'control' else 'variant' end as experiment_group,
     u.initial_plan,
     count(*) as users,
     avg(coalesce(e.events_7d, 0)) as avg_events,
