@@ -20,7 +20,9 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install -e ".[dev]"
+        run: |
+          pip install -e ".[dev]"
+          pip install dbt-duckdb>=1.7.0
 
       - name: Lint Python
         run: ruff check . --fix
